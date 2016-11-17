@@ -24,10 +24,25 @@ for(sourcefile in sourcefiles){
 }
 
 function main(l) {
-
     if(typeof l == "undefined"){
 
         // Default
+
+        if(process.argv[2] == "--dev"){
+
+            // listen for process end and report the run timmer
+            var timmer = 0;
+            setInterval(function () {
+                timmer += 100;
+            },100);
+            process.on("exit",function () {
+                console.log("");
+                console.log("=== Process End === ");
+                console.log(`The time you run this program: ${timmer}ms`);
+                process.exit();
+            });
+
+        }
 
         for(var i = 0; i < code.length - 1; i++){
             runCode(code[i].trim(),i);
@@ -42,6 +57,8 @@ function main(l) {
         }
 
     }
+
+
 }
 
 
@@ -96,6 +113,11 @@ function runCode(code,line) {
 
         }
 
+        // exit the program itself
+        else if(keyword.includes("exit") && !keyword.includes("//")){
+            process.exit();
+        }
+
         // handling error
 
         else{
@@ -105,7 +127,5 @@ function runCode(code,line) {
 
 
     }
-
-
 
 }
