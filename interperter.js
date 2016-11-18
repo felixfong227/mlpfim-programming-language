@@ -8,6 +8,8 @@ process.stdin.setEncoding('utf8');
 // looping up for source files
 
 var sourcefile = process.argv[2];
+var javascriptFallBack = true;
+
 
 if( process.argv[2].includes(".mlp") || process.argv[2].includes(".mlpfim")){
 
@@ -46,7 +48,25 @@ function main(l) {
                 process.exit();
             });
 
+        }else if(process.argv[3] == "--js"){
+
+            // checking is allow JavaScipt fallback
+
+            if(typeof process.argv[4] !== "undefined"){
+
+                if(process.argv[4] == "true"){
+                    javascriptFallBack = true;
+                }else if(process.argv[4] == "false"){
+                    javascriptFallBack = false;
+                }
+
+            }
+
+
         }
+
+
+
 
         for(var i = 0; i < code.length - 1; i++){
             runCode(code[i].trim(),i);
@@ -239,11 +259,27 @@ function runCode(code,line) {
 
         // handling error
 
-        else{
-            console.log("I just don't know what when wrong: " + code);
-            process.exit();
-        }
 
+        else{
+
+            if(javascriptFallBack === true){
+
+                // try to run using the JavaScript engine
+                try{
+                    eval(code);
+                }catch (e){
+
+                    console.log("I just don't know what when wrong: " + code);
+                    process.exit();
+
+                }
+
+            }else{
+                console.log("I just don't know what when wrong: " + code);
+                process.exit();
+            }
+
+        }
 
     }
 

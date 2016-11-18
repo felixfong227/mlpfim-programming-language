@@ -22,3 +22,4 @@ if lovemlp.includes("yes")
 else
     dearPC "Oh,then why do you using the mlpfim?";
 include hello.mlpfim;
+console.log("JavaScript code");
