@@ -1,7 +1,12 @@
 let myPonyName "Rainbow Dash";
 dearPC "Hello everypony i'm come from a source file end with .mlp";
 dearPC "My name is {myPonyName}";
-dearPC "What is your name?can we be friend?";
+dearPC "What is your name?";
 spike newPonyName;
-// i'm an comment;
 dearPC "Hello {newPonyName},is nice too you :P";
+dearPC "Can you be my new friend?";
+spike befriend;
+if befriend.includes("yes") || befriend.includes("Yes") || befriend.includes("sure") || befriend.includes("Sure")
+    dearPC "Ya i have a new friend now :D "
+else
+    dearPC "Oh,but still,nice to meet you {newPonyName} :D ";

@@ -1,26 +1,22 @@
 const fs = require("fs"),
-    path = require("path")
+    path = require("path"),
+    stdin = process.openStdin()
 
 var running = false;
-
+process.stdin.resume();
 process.stdin.setEncoding('utf8');
-var sourcefiles = fs.readdirSync(__dirname);
-
 // looping up for source files
 
-for(sourcefile in sourcefiles){
-    sourcefile = sourcefiles[sourcefile].trim();
+var sourcefile = process.argv[2];
 
-    if( path.extname(sourcefile).includes(".mlp") || path.extname(sourcefile).includes(".mlpfim")){
+if( path.extname(sourcefile).includes(".mlp") || path.extname(sourcefile).includes(".mlpfim")){
 
-        // MLP source file
-        var code = fs.readFileSync(__dirname + "/" + sourcefile).toString();
-        // console.log(code);
-        code = code.split(";");
+    // MLP source file
+    var code = fs.readFileSync(__dirname + "/" + sourcefile).toString() + "\nexit;";
+    code = code.split(";");
 
-        main();
+    main();
 
-    }
 }
 
 function main(l) {
@@ -28,7 +24,7 @@ function main(l) {
 
         // Default
 
-        if(process.argv[2] == "--dev"){
+        if(process.argv[3] == "--dev"){
 
             // listen for process end and report the run timmer
             var timmer = 0;
@@ -101,14 +97,15 @@ function runCode(code,line) {
         // basic input
         else if(keyword.includes("spike") && !keyword.includes("//")){
             var inputName = code.split(" ")[1];
-            process.stdin.on("data",function (data) {
+            stdin.once("data",function (data) {
                 data = data.trim();
                 data = '"' + data + '";';
                 eval(`${inputName} = ${data}`);
                 running = false;
                 main(line);
-                process.exit();
             });
+
+
             running = true;
 
         }
@@ -123,6 +120,48 @@ function runCode(code,line) {
             return true;
             running = false;
             main(line++);
+        }
+
+        // if else
+        else if(keyword.includes("if") && !keyword.includes("//")){
+            var argument = code.split(keyword)[1].split("\n")[0].trim();
+
+            if(eval(argument)){
+                var trueCode = code.split("else")[0].split(argument)[1].split("\n");
+                // run true code
+                for(var i = 1; i < trueCode.length - 1; i++){
+                    trueCode[i] = trueCode[i].trim();
+                    runCode(trueCode[i] + ";");
+                }
+
+            }else{
+
+                try{
+
+                    // try to run the false code
+                    var falseCode = code.split("else")[1].split("\n");
+
+                    // run false code
+
+                    for(var i = 1; i < falseCode.length; i++){
+                        falseCode[i] = falseCode[i].trim();
+                        runCode(falseCode[i] + ";");
+                    }
+
+                }catch (e){
+
+                    // but if the main if return false but the user didn't tell false code
+                    running = true;
+                    main(line);
+                    running = false;
+
+                }
+
+
+
+            }
+
+
         }
 
         // handling error
