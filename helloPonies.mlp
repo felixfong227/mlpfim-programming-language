@@ -1,25 +1,29 @@
 let myPonyName "Rainbow Dash";
 dearPC "Hello everypony i'm come from a source file end with .mlp";
 dearPC "My name is {myPonyName}";
-dearPC "What is your name?";
-spike newPonyName;
-dearPC "Hello {newPonyName},is nice too you :P";
-dearPC "Can you be my new friend?";
-spike befriend;
-if befriend.includes("yes") || befriend.includes("Yes") || befriend.includes("sure") || befriend.includes("Sure")
-    dearPC "Ya i have a new friend now :D "
-else
-    dearPC "Oh,but still,nice to meet you {newPonyName} :D ";
+// dearPC "What is your name?";
+// spike newPonyName;
+// dearPC "Hello {newPonyName},is nice too you :P";
+// dearPC "Can you be my new friend?";
+// spike befriend;
+// if befriend.includes("yes") || befriend.includes("Yes") || befriend.includes("sure") || befriend.includes("Sure")
+//     dearPC "Ya i have a new friend now :D "
+// else
+//     dearPC "Oh,but still,nice to meet you {newPonyName} :D ";
+//
+// for i 0 2 1
+//     dearPC "Okie Dokie";
+//
+// dearPC "Do you love mlpfim programming language?";
+// spike lovemlp;
+//
+// if lovemlp.includes("yes")
+//     dearPC "Yes,me too"
+// else
+//     dearPC "Oh,then why do you using the mlpfim?";
+// include hello.mlpfim;
+// console.log("JavaScript code");
 
-for i 0 2 1
-    dearPC "Okie Dokie";
-
-dearPC "Do you love mlpfim programming language?";
-spike lovemlp;
-
-if lovemlp.includes("yes")
-    dearPC "Yes,me too"
-else
-    dearPC "Oh,then why do you using the mlpfim?";
-include hello.mlpfim;
-console.log("JavaScript code");
+filesystem.writeFile "test.txt" {
+    Hello Everypony.
+};

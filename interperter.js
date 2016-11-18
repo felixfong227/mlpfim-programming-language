@@ -15,7 +15,7 @@ if( process.argv[2].includes(".mlp") || process.argv[2].includes(".mlpfim")){
 
     // MLP source file
     try{
-        var code = fs.readFileSync(__dirname + "/" + sourcefile).toString() + "\nexit;";
+        var code = fs.readFileSync(__dirname + "/" + sourcefile).toString() + "\n;exit;";
         code = code.split(";");
 
         main();
@@ -253,6 +253,29 @@ function runCode(code,line) {
                 }
 
             }
+
+
+        }
+
+        // the file object
+
+        else if(keyword.includes("filesystem") && !keyword.includes("//")){
+
+            var call = code.split(".")[1].split(" ")[0];
+            var fileObject = {
+
+                writeFile: function () {
+
+                    var filePath = path.join(__dirname + "/" +  code.split(call)[1].trim().replace("\"","").replace("\"","").split("{")[0] );
+                    var text = code.split("{")[1].split("}")[0];
+
+                    fs.writeFileSync(filePath,text);
+
+                }
+
+            }
+
+            eval("fileObject." + call + "();");
 
 
         }
