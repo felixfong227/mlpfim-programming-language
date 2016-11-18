@@ -118,6 +118,13 @@ function runCode(code,line) {
             process.exit();
         }
 
+        // commenting
+        else if(keyword.includes("//")){
+            return true;
+            running = false;
+            main(line++);
+        }
+
         // handling error
 
         else{

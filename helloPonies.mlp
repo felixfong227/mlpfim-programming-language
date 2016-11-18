@@ -3,4 +3,5 @@ dearPC "Hello everypony i'm come from a source file end with .mlp";
 dearPC "My name is {myPonyName}";
 dearPC "What is your name?can we be friend?";
 spike newPonyName;
+// i'm an comment;
 dearPC "Hello {newPonyName},is nice too you :P";
