@@ -9,14 +9,22 @@ process.stdin.setEncoding('utf8');
 
 var sourcefile = process.argv[2];
 
-if( path.extname(sourcefile).includes(".mlp") || path.extname(sourcefile).includes(".mlpfim")){
+if( process.argv[2].includes(".mlp") || process.argv[2].includes(".mlpfim")){
 
     // MLP source file
-    var code = fs.readFileSync(__dirname + "/" + sourcefile).toString() + "\nexit;";
-    code = code.split(";");
+    try{
+        var code = fs.readFileSync(__dirname + "/" + sourcefile).toString() + "\nexit;";
+        code = code.split(";");
 
-    main();
+        main();
+    }catch (e){
+        console.log("Can't not find the source file.");
+        process.exit();
+    }
 
+}else{
+    console.log("The interpreter won't run a source file without .mlp or .mlpfim extension");
+    process.exit();
 }
 
 function main(l) {
