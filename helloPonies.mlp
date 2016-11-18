@@ -24,6 +24,7 @@ dearPC "My name is {myPonyName}";
 // include hello.mlpfim;
 // console.log("JavaScript code");
 
-filesystem.writeFile "test.txt" {
-    Hello Everypony.
+filesystem.writeFile "Rainbow Dash Are So.txt" {
+So
+Awesome!!
 };

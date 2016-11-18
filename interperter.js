@@ -267,7 +267,7 @@ function runCode(code,line) {
                 writeFile: function () {
 
                     var filePath = path.join(__dirname + "/" +  code.split(call)[1].trim().replace("\"","").replace("\"","").split("{")[0] );
-                    var text = code.split("{")[1].split("}")[0];
+                    var text = code.split("{")[1].split("}")[0].trim();
 
                     fs.writeFileSync(filePath,text);
 
