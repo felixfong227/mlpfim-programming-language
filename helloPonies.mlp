@@ -12,4 +12,7 @@ else
     dearPC "Oh,but still,nice to meet you {newPonyName} :D ";
 
 for i 0 2 1
-    dearPC "Okie Dokie"
+    dearPC "Okie Dokie";
+
+include hello.mlpfim;
+dearPC "After the include stuff";

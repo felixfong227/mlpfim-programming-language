@@ -186,6 +186,23 @@ function runCode(code,line) {
 
         }
 
+        // include other MLP source file
+
+        else if(keyword.includes("include") && !keyword.includes("//")){
+
+            var sourcefilePath = path.join( __dirname + "/" + code.split(keyword)[1].trim() );
+
+            var newCode = fs.readFileSync(sourcefilePath).toString();
+            newCode = newCode.split(";");
+
+            for(var i = 0; i < newCode.length - 1; i++){
+                newCode[i] = newCode[i].trim();
+                runCode(newCode[i]);
+            }
+            main(line);
+
+        }
+
         // handling error
 
         else{
