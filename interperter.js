@@ -34,7 +34,7 @@ function main(l) {
             process.on("exit",function () {
                 console.log("");
                 console.log("=== Process End === ");
-                console.log(`The time you run this program: ${timmer}ms`);
+                console.log(`The time you run this program: ${timmer}ms(${timmer / 1000}s)`);
                 process.exit();
             });
 

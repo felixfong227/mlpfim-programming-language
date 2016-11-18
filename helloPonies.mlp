@@ -14,5 +14,11 @@ else
 for i 0 2 1
     dearPC "Okie Dokie";
 
+dearPC "Do you love mlpfim programming language?";
+spike lovemlp;
+
+if lovemlp.includes("yes")
+    dearPC "Yes,me too"
+else
+    dearPC "Oh,then why do you using the mlpfim?";
 include hello.mlpfim;
-dearPC "After the include stuff";
