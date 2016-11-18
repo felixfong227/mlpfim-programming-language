@@ -10,3 +10,6 @@ if befriend.includes("yes") || befriend.includes("Yes") || befriend.includes("su
     dearPC "Ya i have a new friend now :D "
 else
     dearPC "Oh,but still,nice to meet you {newPonyName} :D ";
+
+for i 0 2 1
+    dearPC "Okie Dokie"
