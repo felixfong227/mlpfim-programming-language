@@ -23,10 +23,25 @@ else
     dearPC "Oh,then why do you using the mlpfim?";
 include hello.mlpfim;
 
+// i'm and comment
+
 filesystem.writeFile "Rainbow Dash Are So.txt" {
     So
     Awesome!!
 };
 
+// Create a directory named "test"
+filesystem.mkdir "test";
+
+// Write a file in the test dir named files.txt
+filesystem.writeFile "test/files.txt" {
+    I'm a file as you can see.
+};
+
+// Remove the whole directory include the fiels inside it
+filesystem.rmdirandfiles "test";
+
+// Read the file;
 filesystem.readFile "Rainbow Dash Are So.txt " RainbowDashAreSoText;
+// Output the file MLPFIM just read it
 dearPC "{RainbowDashAreSoText}";

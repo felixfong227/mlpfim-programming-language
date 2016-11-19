@@ -1,6 +1,7 @@
 const fs = require("fs"),
     path = require("path"),
-    stdin = process.openStdin()
+    stdin = process.openStdin(),
+    terminal = require("child_process").exec;
 
 var running = false;
 process.stdin.resume();
@@ -144,6 +145,7 @@ function runCode(code,line) {
         else if(keyword.includes("//")){
             return true;
             running = false;
+            process.exit();
             main(line++);
         }
 
@@ -298,6 +300,28 @@ function runCode(code,line) {
                     });
 
                     eval(`${textVariable} = "${bigData}"`);
+                },
+
+                mkdir: function () {
+                    var filePath = path.join(__dirname + "/" +  code.split(call)[1].split("\"")[1] );
+                    fs.mkdirSync(filePath);
+                },
+
+                rmdir: function () {
+                    var filePath = path.join(__dirname + "/" +  code.split(call)[1].split("\"")[1] );
+
+                    try{
+                        fs.rmdirSync(filePath);
+                    }catch (e){
+                        console.log("Error: The directory is not empty [You can try filesystem.rmdirandfiles]");
+                        process.exit();
+                    }
+
+                },
+
+                rmdirandfiles: function () {
+                    var filePath = path.join(__dirname + "/" +  code.split(call)[1].split("\"")[1] );
+                    terminal(`rm -rfv ${filePath}`);
                 }
 
             }
