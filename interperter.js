@@ -14,15 +14,10 @@ var javascriptFallBack = true;
 if( process.argv[2].includes(".mlp") || process.argv[2].includes(".mlpfim")){
 
     // MLP source file
-    try{
-        var code = fs.readFileSync(__dirname + "/" + sourcefile).toString() + "\n;exit;";
-        code = code.split(";");
+    var code = fs.readFileSync(__dirname + "/" + sourcefile).toString() + "\nexit;";
+    code = code.split(";");
 
-        main();
-    }catch (e){
-        console.log("Can't not find the source file.");
-        process.exit();
-    }
+    main();
 
 }else{
     console.log("The interpreter won't run a source file without .mlp or .mlpfim extension");
@@ -115,6 +110,8 @@ function runCode(code,line) {
                 var tmpString = word.substring(word.lastIndexOf("{") + 1, word.lastIndexOf("}"));
 
                 word = word.replace(tmpString, eval(tmpString)).replace("{", "").replace("}", "");
+
+                word = word.replace("__mlpInterperterOutput_newLine__","\n");
 
             }
 
@@ -268,9 +265,39 @@ function runCode(code,line) {
 
                     var filePath = path.join(__dirname + "/" +  code.split(call)[1].trim().replace("\"","").replace("\"","").split("{")[0] );
                     var text = code.split("{")[1].split("}")[0].trim();
+                    var bigText = [];
+                    text = text.split("\n");
+                    text.forEach(function (chunk) {
+                        bigText.push( chunk.trim() );
+                    });
 
-                    fs.writeFileSync(filePath,text);
+                    bigText.forEach(function (chunk) {
+                       bigText = bigText.toString();
+                        bigText = bigText.replace(",","\n");
+                    });
 
+                    fs.writeFileSync(filePath,bigText);
+
+                },
+
+                readFile: function () {
+
+                    var filePath = path.join(__dirname + "/" +  code.split(call)[1].split("\"")[1] );
+                    var textVariable = code.split(keyword)[1].split("\"")[2].trim();
+                    var data = fs.readFileSync(filePath).toString().trim();
+                    var bigData = [];
+
+                    data = data.split("\n");
+                    data.forEach(function (chunk) {
+                        bigData.push( chunk.trim() );
+                    });
+
+                    bigData.forEach(function (chunk) {
+                        bigData = bigData.toString();
+                        bigData = bigData.replace(",","__mlpInterperterOutput_newLine__");
+                    });
+
+                    eval(`${textVariable} = "${bigData}"`);
                 }
 
             }

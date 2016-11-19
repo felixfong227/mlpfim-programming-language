@@ -25,6 +25,9 @@ dearPC "My name is {myPonyName}";
 // console.log("JavaScript code");
 
 filesystem.writeFile "Rainbow Dash Are So.txt" {
-So
-Awesome!!
+    So
+    Awesome!!
 };
+
+filesystem.readFile "Rainbow Dash Are So.txt " RainbowDashAreSoText;
+dearPC "{RainbowDashAreSoText}";
