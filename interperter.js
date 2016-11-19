@@ -104,7 +104,6 @@ function runCode(code,line) {
         else if(keyword.includes("dearPC") && !keyword.includes("//")){
             running = true;
             var word = code.split("\"")[1];
-
             // template strings
             while (word.includes("{") && word.includes("}")) {
 
@@ -112,11 +111,25 @@ function runCode(code,line) {
 
                 word = word.replace(tmpString, eval(tmpString)).replace("{", "").replace("}", "");
 
-                word = word.replace("__mlpInterperterOutput_newLine__","\n");
-
             }
 
-            console.log(word);
+            if(word.includes("__mlpInterperterOutput_newLine__")){
+                var bigWord = [];
+                word.split("__mlpInterperterOutput_newLine__").forEach(function (chunk) {
+                    bigWord.push(chunk + "\n");
+                });
+
+                bigWord.forEach(function (chunk) {
+                   bigWord = bigWord.toString();
+                    bigWord = bigWord.replace(",","");
+                });
+                console.log(bigWord);
+
+            }else{
+                console.log(word);
+            }
+
+
             running = false;
         }
 
@@ -342,6 +355,14 @@ function runCode(code,line) {
 
         }
 
+        // skip code
+
+        else if(keyword == "skip" && !keyword.includes("//")){
+
+            main( (line + 1) );
+
+        }
+
         // handling error
 
 
@@ -354,13 +375,13 @@ function runCode(code,line) {
                     eval(code);
                 }catch (e){
 
-                    console.log("I just don't know what when wrong: " + code);
+                    console.log("I just don't know what when wrong on line => " + (line + 1));
                     process.exit();
 
                 }
 
             }else{
-                console.log("I just don't know what when wrong: " + code);
+                console.log("I just don't know what when wrong on line => " + (line + 1));
                 process.exit();
             }
 

@@ -23,25 +23,30 @@ else
     dearPC "Oh,then why do you using the mlpfim?";
 include hello.mlpfim;
 
-// i'm and comment
+// i'm and comment;
 
 filesystem.writeFile "Rainbow Dash Are So.txt" {
+    Rainbow Dash Are
     So
     Awesome!!
 };
 
-// Create a directory named "test"
+// Create a directory named "test";
 filesystem.mkdir "test";
 
-// Write a file in the test dir named files.txt
+// Write a file in the test dir named files.txt;
 filesystem.writeFile "test/files.txt" {
     I'm a file as you can see.
 };
 
-// Remove the whole directory include the fiels inside it
+// Remove the whole directory include the fiels inside it;
 filesystem.rmdirandfiles "test";
 
 // Read the file;
 filesystem.readFile "Rainbow Dash Are So.txt " RainbowDashAreSoText;
-// Output the file MLPFIM just read it
+// Output the file MLPFIM just read it;
 dearPC "{RainbowDashAreSoText}";
+
+// Skip one line of code;
+skip;
+dearPC "I hope the skip command and skip pass me";
