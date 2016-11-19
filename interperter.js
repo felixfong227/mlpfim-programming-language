@@ -302,7 +302,18 @@ function runCode(code,line) {
 
             }
 
-            eval("fileObject." + call + "();");
+            try{
+                eval("fileObject." + call + "();");
+            }catch (e){
+                e = e.message;
+
+                if(e.includes("is not a function")){
+                    console.log("Can't not find the correct filesystem object you are looking for");
+                    console.log("On code: " + code);
+                    process.exit();
+                }
+
+            }
 
 
         }
