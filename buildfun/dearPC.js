@@ -4,12 +4,9 @@ module.exports = {
 
         var word = code.split("\"")[1];
         // template strings
-        while (word.includes("{") && word.includes("}")) {
-
-            var tmpString = word.substring(word.lastIndexOf("{") + 1, word.lastIndexOf("}"));
-
-            word = word.replace(tmpString, eval(tmpString)).replace("{", "").replace("}", "");
-
+        while (word.includes("${") && word.includes("}")) {
+            var tmpString = word.split("{")[1].split("}")[0].trim();
+            word = word.replace(tmpString, eval(tmpString)).replace("${", "").replace("}", "");
         }
 
         if(word.includes("__mlpInterperterOutput_newLine__")){

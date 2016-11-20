@@ -1,15 +1,15 @@
 let myPonyName "Rainbow Dash";
 dearPC "Hello everypony i'm come from a source file end with .mlp";
-dearPC "My name is {myPonyName}";
+dearPC "My name is ${myPonyName}";
 dearPC "What is your name?";
 spike newPonyName;
-dearPC "Hello {newPonyName},is nice too you :P";
+dearPC "Hello ${newPonyName},is nice too you :P";
 dearPC "Can you be my new friend?";
 spike befriend;
 if befriend.includes("yes") || befriend.includes("Yes") || befriend.includes("sure") || befriend.includes("Sure")
     dearPC "Ya i have a new friend now :D "
 else
-    dearPC "Oh,but still,nice to meet you {newPonyName} :D ";
+    dearPC "Oh,but still,nice to meet you ${newPonyName} :D ";
 
 for i 0 2 1
     dearPC "Okie Dokie";
@@ -45,8 +45,13 @@ dearPC "rmdirandfiles";
 // Read the file;
 filesystem.readFile "Rainbow Dash Are So.txt " RainbowDashAreSoText;
 // Output the file MLPFIM just read it;
-dearPC "{RainbowDashAreSoText}";
+dearPC "${RainbowDashAreSoText}";
 
 // Skip one line of code;
 skip;
 dearPC "I hope the skip command and skip pass me";
+
+// the network object;
+network.get "https://youtube-dl-api.000webhostapp.com/?id=PH1U87rNR7Q" youtubeAPI;
+dearPC "${JSON.parse(youtubeAPI).hdvid}";
+dearPC "${JSON.parse(youtubeAPI).title}";

@@ -132,9 +132,13 @@ module.exports = {
             }
 
             // skip code
-
             else if(keyword == "skip" && !keyword.includes("//")){
                 require("./interperter").main( (line + 1) );
+            }
+
+            // the network object
+            else if(keyword.includes("network") && !keyword.includes("//")){
+                require("./buildfun/network").network(code,keyword,line);
             }
 
             // handling error
@@ -150,16 +154,19 @@ module.exports = {
                     }catch (e){
 
                         console.log("I just don't know what when wrong on line => " + (line + 1));
+                        console.log("On code => " + code);
                         process.exit();
 
                     }
 
                 }else{
                     console.log("I just don't know what when wrong on line => " + (line + 1));
+                    console.log("On code => " + code);
                     process.exit();
                 }
 
             }
+
 
         }
 
