@@ -23,8 +23,6 @@ else
     dearPC "Oh,then why do you using the mlpfim?";
 include hello.mlpfim;
 
-// i'm and comment;
-
 filesystem.writeFile "Rainbow Dash Are So.txt" {
     Rainbow Dash Are
     So
