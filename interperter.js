@@ -89,61 +89,34 @@ function runCode(code,line) {
 
     if(!running){
 
-        // create variable
+        // create variable (module)
 
         if(keyword.includes("let") && !keyword.includes("//")){
             running = true;
-            var varName = code.split(keyword)[1].split(" ")[1].trim();
-            var varValue = code.split(keyword)[1].split("\"")[1];
-            eval(`${varName} = "${varValue}";`);
+            require("./buildfun/let").let(code,keyword);
             running = false;
         }
 
-        // basic output
+        // basic output (module)
 
         else if(keyword.includes("dearPC") && !keyword.includes("//")){
             running = true;
-            var word = code.split("\"")[1];
-            // template strings
-            while (word.includes("{") && word.includes("}")) {
-
-                var tmpString = word.substring(word.lastIndexOf("{") + 1, word.lastIndexOf("}"));
-
-                word = word.replace(tmpString, eval(tmpString)).replace("{", "").replace("}", "");
-
-            }
-
-            if(word.includes("__mlpInterperterOutput_newLine__")){
-                var bigWord = [];
-                word.split("__mlpInterperterOutput_newLine__").forEach(function (chunk) {
-                    bigWord.push(chunk + "\n");
-                });
-
-                bigWord.forEach(function (chunk) {
-                   bigWord = bigWord.toString();
-                    bigWord = bigWord.replace(",","");
-                });
-                console.log(bigWord);
-
-            }else{
-                console.log(word);
-            }
-
-
+            require("./buildfun/dearPC").dearPC(code,keyword);
             running = false;
         }
 
         // basic input
         else if(keyword.includes("spike") && !keyword.includes("//")){
+            running = false;
             var inputName = code.split(" ")[1];
-            stdin.once("data",function (data) {
+
+            process.stdin.once("data",function (data) {
                 data = data.trim();
                 data = '"' + data + '";';
                 eval(`${inputName} = ${data}`);
                 running = false;
                 main(line);
             });
-
 
             running = true;
 
