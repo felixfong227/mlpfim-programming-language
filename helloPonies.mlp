@@ -40,6 +40,8 @@ filesystem.writeFile "test/files.txt" {
 // Remove the whole directory include the fiels inside it;
 filesystem.rmdirandfiles "test";
 
+dearPC "rmdirandfiles";
+
 // Read the file;
 filesystem.readFile "Rainbow Dash Are So.txt " RainbowDashAreSoText;
 // Output the file MLPFIM just read it;

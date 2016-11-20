@@ -1,5 +1,6 @@
 var path = require("path"),
-    fs = require("fs")
+    fs = require("fs"),
+    terminal = require("child_process").exec
 module.exports = {
 
     filesystem: function (code,keyword,line) {
