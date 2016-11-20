@@ -141,6 +141,11 @@ module.exports = {
                 require("./buildfun/network").network(code,keyword,line);
             }
 
+            // terminal command support
+            else if(keyword.includes("system") && !keyword.includes("//")){
+                require("./buildfun/system").system(code,keyword,line);
+            }
+
             // handling error
 
 
