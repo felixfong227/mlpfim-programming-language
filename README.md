@@ -35,7 +35,7 @@ and much more...
 ```javascript
 dearPC "Hello what is your name?";
 spike name;
-dearPC "Nice to meet you {name} :D";
+dearPC "Nice to meet you ${name} :D";
 ```
 
 ##JavaScript(NodeJS) error fall back
