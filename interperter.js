@@ -6,6 +6,8 @@ const fs = require("fs"),
 
 module.exports = {
 
+    running: false,
+
     main: function (l) {
 
         if(typeof l == "undefined"){
@@ -67,39 +69,28 @@ module.exports = {
         var keyword = code.split(" ")[0];
 
 
-        if(!running){
+        if(!require("./interperter").running){
 
             // create variable (module)
 
             if(keyword.includes("let") && !keyword.includes("//")){
-                running = true;
+                require("./interperter").running = true;
                 require("./buildfun/let").let(code,keyword);
-                running = false;
+                require("./interperter").running = false;
             }
 
             // basic output (module)
 
             else if(keyword.includes("dearPC") && !keyword.includes("//")){
-                running = true;
+                require("./interperter").running = true;
                 require("./buildfun/dearPC").dearPC(code,keyword);
-                running = false;
+                require("./interperter").running = false;
             }
 
-            // basic input
+            // basic input (module)
             else if(keyword.includes("spike") && !keyword.includes("//")){
-                running = false;
-                var inputName = code.split(" ")[1];
-
-                process.stdin.once("data",function (data) {
-                    data = data.trim();
-                    data = '"' + data + '";';
-                    eval(`${inputName} = ${data}`);
-                    running = false;
-                    require("./interperter").main(line);
-                });
-
-                running = true;
-
+                require("./buildfun/spike").spike(code,line);
+                require("./interperter").running = true;
             }
 
             // exit the program itself
@@ -110,215 +101,40 @@ module.exports = {
             // commenting
             else if(keyword.includes("//")){
                 return true;
-                running = false;
+                require("./interperter").running = false;
                 process.exit();
                 require("./interperter").main(line++);
             }
 
-            // if else
+            // if else (module)
             else if(keyword.includes("if") && !keyword.includes("//")){
-                var argument = code.split(keyword)[1].split("\n")[0].trim();
-
-                if(eval(argument)){
-                    var trueCode = code.split("else")[0].split(argument)[1].split("\n");
-                    // run true code
-                    for(var i = 1; i < trueCode.length - 1; i++){
-                        trueCode[i] = trueCode[i].trim();
-                        require("./interperter").runCode(trueCode[i] + ";");
-                    }
-
-                }else{
-
-                    try{
-
-                        // try to run the false code
-                        var falseCode = code.split("else")[1].split("\n");
-
-                        // run false code
-
-                        for(var i = 1; i < falseCode.length; i++){
-                            falseCode[i] = falseCode[i].trim();
-                            require("./interperter").runCode(falseCode[i] + ";");
-                        }
-
-                    }catch (e){
-
-                        // but if the main if return false but the user didn't tell false code
-                        running = true;
-                        require("./interperter").main(line);
-                        running = false;
-
-                    }
-
-
-
-                }
-
-
+                require("./buildfun/if").if(code,keyword,line);
             }
 
-            // for loop
-
+            // for loop(module)
             else if(keyword.includes("for") && !keyword.includes("//")){
-
-                var index = code.split(keyword)[1].split("\n")[0].split(" ")[1];
-                var startNumber = parseInt( code.split(keyword)[1].split("\n")[0].split(" ")[2] );
-                var endtNumber = parseInt( code.split(keyword)[1].split("\n")[0].split(" ")[3] );
-                var powerNumber = parseInt( code.split(keyword)[1].split("\n")[0].split(" ")[4] );
-                var todo = code.split(keyword)[1].split("\n");
-                for(var i = 1; i < todo.length; i++){
-
-                    todo[i] = todo[i].trim();
-
-                    for(var index = startNumber; index < endtNumber; index+=powerNumber){
-                        require("./interperter").runCode(todo[i] + ";");
-                    }
-
-                }
-
-
+                require("./buildfun/for").for(code,keyword);
             }
 
-            // include other MLP source file
-
+            // include other MLP source file (module)
             else if(keyword.includes("include") && !keyword.includes("//")){
-
-                var sourcefilePath = path.join( __dirname + "/" + code.split(keyword)[1].trim() );
-
-                try{
-
-                    var newCode = fs.readFileSync(sourcefilePath).toString();
-                    newCode = newCode.split(";");
-
-                    for(var i = 0; i < newCode.length - 1; i++){
-                        newCode[i] = newCode[i].trim();
-                        require("./interperter").runCode(newCode[i]);
-                    }
-                    require("./interperter").main(line);
-
-                }catch (e){
-
-                    if(e.message.includes("no such file")){
-
-                        console.log("Can't not find the file to be including => " + code.split(keyword)[1].trim());
-                        process.exit();
-
-                    }
-                }
-
+                require("./buildfun/include").include(code,keyword,line);
             }
 
-            // while loop
+            // while loop (module)
             else if(keyword.includes("while") && !keyword.includes("//")){
-
-                var argument = code.split(keyword)[1].split("\n")[0].trim();
-                var todo = code.split("\n");
-
-                while (argument){
-
-                    for(var i = 1; i < todo.length; i++){
-
-                        require("./interperter").runCode(todo[i].trim());
-
-                    }
-
-                }
-
-
+                require("./buildfun/while").while(code,keyword);
             }
 
-            // the file object
-
+            // the file object(module)
             else if(keyword.includes("filesystem") && !keyword.includes("//")){
-
-                var call = code.split(".")[1].split(" ")[0];
-                var fileObject = {
-
-                    writeFile: function () {
-
-                        var filePath = path.join(__dirname + "/" +  code.split(call)[1].trim().replace("\"","").replace("\"","").split("{")[0] );
-                        var text = code.split("{")[1].split("}")[0].trim();
-                        var bigText = [];
-                        text = text.split("\n");
-                        text.forEach(function (chunk) {
-                            bigText.push( chunk.trim() );
-                        });
-
-                        bigText.forEach(function (chunk) {
-                            bigText = bigText.toString();
-                            bigText = bigText.replace(",","\n");
-                        });
-
-                        fs.writeFileSync(filePath,bigText);
-
-                    },
-
-                    readFile: function () {
-
-                        var filePath = path.join(__dirname + "/" +  code.split(call)[1].split("\"")[1] );
-                        var textVariable = code.split(keyword)[1].split("\"")[2].trim();
-                        var data = fs.readFileSync(filePath).toString().trim();
-                        var bigData = [];
-
-                        data = data.split("\n");
-                        data.forEach(function (chunk) {
-                            bigData.push( chunk.trim() );
-                        });
-
-                        bigData.forEach(function (chunk) {
-                            bigData = bigData.toString();
-                            bigData = bigData.replace(",","__mlpInterperterOutput_newLine__");
-                        });
-
-                        eval(`${textVariable} = "${bigData}"`);
-                    },
-
-                    mkdir: function () {
-                        var filePath = path.join(__dirname + "/" +  code.split(call)[1].split("\"")[1] );
-                        fs.mkdirSync(filePath);
-                    },
-
-                    rmdir: function () {
-                        var filePath = path.join(__dirname + "/" +  code.split(call)[1].split("\"")[1] );
-
-                        try{
-                            fs.rmdirSync(filePath);
-                        }catch (e){
-                            console.log("Error: The directory is not empty [You can try filesystem.rmdirandfiles]");
-                            process.exit();
-                        }
-
-                    },
-
-                    rmdirandfiles: function () {
-                        var filePath = path.join(__dirname + "/" +  code.split(call)[1].split("\"")[1] );
-                        terminal(`rm -rfv ${filePath}`);
-                    }
-
-                }
-
-                try{
-                    eval("fileObject." + call + "();");
-                }catch (e){
-                    e = e.message;
-
-                    if(e.includes("is not a function")){
-                        console.log("Can't not find the correct filesystem object you are looking for");
-                        console.log("On code: " + code);
-                        process.exit();
-                    }
-
-                }
-
-
+                require("./buildfun/filesystem").filesystem(code,keyword,line);
             }
 
             // skip code
 
             else if(keyword == "skip" && !keyword.includes("//")){
-
                 require("./interperter").main( (line + 1) );
-
             }
 
             // handling error
@@ -351,7 +167,6 @@ module.exports = {
 
 };
 
-var running = false;
 process.stdin.resume();
 process.stdin.setEncoding('utf8');
 // looping up for source files
@@ -372,4 +187,3 @@ if( process.argv[2].includes(".mlp") || process.argv[2].includes(".mlpfim")){
     console.log("The interpreter won't run a source file without .mlp or .mlpfim extension");
     process.exit();
 }
-
