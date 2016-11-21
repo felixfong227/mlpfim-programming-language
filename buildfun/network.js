@@ -23,6 +23,26 @@ module.exports = {
 
                 require("../interperter").running = true;
 
+            },
+
+            JSON: function () {
+
+                var url = code.split("\"")[1].trim();
+                var callbackVariable = code.split("\"")[2].trim();
+
+                terminal(`curl -s ${url}`,function (error,data) {
+
+                    require("../interperter").running = false;
+                    try{
+                        eval(`${callbackVariable} = ${data}`);
+                    }catch (e){
+                        eval(`${callbackVariable} = ${data}`);
+                    }
+                    require("../interperter").main(line);
+                });
+
+                require("../interperter").running = true;
+
             }
 
         }
