@@ -146,6 +146,11 @@ module.exports = {
                 require("./buildfun/system").system(code,keyword,line);
             }
 
+            // convert string to JSON
+            else if(keyword == "JSON" && !keyword.includes("//")){
+                require("./buildfun/JSON").JSON(code,keyword,line);
+            }
+
             // handling error
 
 

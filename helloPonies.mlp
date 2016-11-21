@@ -53,10 +53,11 @@ dearPC "I hope the skip command and skip pass me";
 
 // the network object;
 network.get "https://youtube-dl-api.000webhostapp.com/?id=PH1U87rNR7Q" youtubeAPI;
-dearPC "${youtubeAPI}";
+JSON youtubeAPI;
+dearPC "${youtubeAPI.videoId}";
+
 
 // convert data to JSON object;
-
 network.JSON "https://youtube-dl-api.000webhostapp.com/?id=PH1U87rNR7Q" youtubeAPI;
 dearPC "${youtubeAPI.title}";
 // Using the Terminal(CMD) command;
