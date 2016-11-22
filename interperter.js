@@ -10,11 +10,17 @@ module.exports = {
 
     main: function (l) {
 
-        if(typeof l == "undefined"){
 
-            // Default
+        try{
 
-            if(process.argv[3] == "--dev"){
+            var config = fs.readFileSync(__dirname + "/mlpfimconfig.json").toString();
+            config = JSON.parse(config);
+
+            if(config.jsfallback === false){
+                javascriptFallBack = false;
+            }
+
+            if(config.dev === true){
 
                 // listen for process end and report the run timmer
                 var timmer = 0;
@@ -28,36 +34,31 @@ module.exports = {
                     process.exit();
                 });
 
-            }else if(process.argv[3] == "--js"){
+            }
 
-                // checking is allow JavaScipt fallback
+            if(typeof l == "undefined"){
 
-                if(typeof process.argv[4] !== "undefined"){
+                // Default
 
-                    if(process.argv[4] == "true"){
-                        javascriptFallBack = true;
-                    }else if(process.argv[4] == "false"){
-                        javascriptFallBack = false;
-                    }
-
+                for(var i = 0; i < code.length - 1; i++){
+                    require("./interperter").runCode(code[i].trim(),i);
                 }
 
+            }else{
+
+                // Run line
+
+                for(var i = l + 1; i < code.length - 1; i++){
+                    require("./interperter").runCode(code[i].trim(),i);
+                }
 
             }
 
+        }catch (e){
 
-
-
-            for(var i = 0; i < code.length - 1; i++){
-                require("./interperter").runCode(code[i].trim(),i);
-            }
-
-        }else{
-
-            // Run line
-
-            for(var i = l + 1; i < code.length - 1; i++){
-                require("./interperter").runCode(code[i].trim(),i);
+            if(e.message.includes("no such file")){
+                fs.writeFileSync(__dirname + "/mlpfimconfig.json","{\n  \"jsfallback\": true,\n  \"dev\": false\n}");
+                require("./interperter").main();
             }
 
         }
