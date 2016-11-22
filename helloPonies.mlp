@@ -62,3 +62,7 @@ network.JSON "https://youtube-dl-api.000webhostapp.com/?id=PH1U87rNR7Q" youtubeA
 dearPC "${youtubeAPI.title}";
 // Using the Terminal(CMD) command;
 system "echo Hello from the Terminal command";
+
+// plugins;
+plugin rainbowdash.iamsoawesome;
+plugin rainbowdash.cooler;

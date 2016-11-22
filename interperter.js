@@ -152,6 +152,11 @@ module.exports = {
                 require("./buildfun/JSON").JSON(code,keyword,line);
             }
 
+            // plugin
+            else if(keyword.includes("plugin") && !keyword.includes("//")){
+                require("./buildfun/plugin").plugin(code,keyword,line);
+            }
+
             // handling error
 
 
