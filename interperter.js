@@ -213,10 +213,21 @@ var plugin = true;
 if( process.argv[2].includes(".mlp") || process.argv[2].includes(".mlpfim")){
 
     // MLP source file
-    var code = fs.readFileSync(__dirname + "/" + sourcefile).toString() + "\nexit;";
-    code = code.split(";");
+    try{
 
-    require("./interperter").main();
+        var code = fs.readFileSync(__dirname + "/" + sourcefile).toString() + "\nexit;";
+        code = code.split(";");
+
+        require("./interperter").main();
+
+    }catch (e){
+
+        if(e.message.includes("no such file")){
+            console.log("Can't not find the correct source file");
+            process.exit();
+        }
+
+    }
 
 }else{
     console.log("The interpreter won't run a source file without .mlp or .mlpfim extension");
