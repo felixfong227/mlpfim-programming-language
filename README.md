@@ -8,7 +8,7 @@
 ##How to set up and running?
 <li>Open up your `Terminal/Git Bash`,and `cd` into the repo you just clone down</li>
 <li>Using the command at the Terminal `$ node interperter.js <mlpSourceFile>`</li>
-<li>And if you want to can always add the `--dev` flag at the end of the command in order to tell you the running time you span on this program.</li>
+<li>And if you want to see how much time you span on this program,you can go to the config file `mlpfimconfig.json`,and change the `dev`option `false` become `true`</li>
 
 ##Demo code
 Basic output
@@ -40,10 +40,10 @@ dearPC "Nice to meet you ${name} :D";
 
 ##JavaScript(NodeJS) error fall back
 If your mlpfim code hit an error,do you allow to try running in the JavaScript engine?by default is set to `true`<br>
-`$ node interperter.js helloPonies.mlp --js true`<br>
-or<br>
-`$ node interperter.js helloPonies.mlp --js false`<br>
+Go to the config file `mlpfimconfig.json`and change it `true` => `false`
 
+##Config file
+The config file it tell the interperter how to work with your program,and the config file gen by auto,so you don't need to worry about that.
 
 Please fork this project and take it awesome<br>
 This project mainly just for fun,and still on "development"
