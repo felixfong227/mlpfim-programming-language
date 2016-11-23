@@ -64,5 +64,5 @@ dearPC "${youtubeAPI.title}";
 system "echo Hello from the Terminal command";
 
 // plugins;
-plugin rainbowdash.iamsoawesome;
+plugin rainbowdash.iamsoawesome("AWESOME","Daring");
 plugin rainbowdash.cooler;

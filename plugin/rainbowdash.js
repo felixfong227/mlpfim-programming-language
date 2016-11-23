@@ -1,7 +1,7 @@
 module.exports = {
 
-    iamsoawesome: function () {
-      console.log("I'm so AWESOME");
+    iamsoawesome: function (word,word2) {
+      console.log("I'm so " + word + " and also " + word2);
     },
 
     cooler: function () {
