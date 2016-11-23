@@ -1,67 +1,67 @@
-let myPonyName "Rainbow Dash";
-dearPC "Hello everypony i'm come from a source file end with .mlp";
-dearPC "My name is ${myPonyName}";
-dearPC "What is your name?";
-spike newPonyName;
-dearPC "Hello ${newPonyName},is nice too you :P";
-dearPC "Can you be my new friend?";
-spike befriend;
-if befriend.includes("yes") || befriend.includes("Yes") || befriend.includes("sure") || befriend.includes("Sure")
-    dearPC "Ya i have a new friend now :D "
-else
-    dearPC "Oh,but still,nice to meet you ${newPonyName} :D ";
-
-for i 0 2 1
-    dearPC "Okie Dokie";
-
-dearPC "Do you love mlpfim programming language?";
-spike lovemlp;
-
-if lovemlp.includes("yes")
-    dearPC "Yes,me too"
-else
-    dearPC "Oh,then why do you using the mlpfim?";
-include hello.mlpfim;
-
-filesystem.writeFile "Rainbow Dash Are So.txt" {
-    Rainbow Dash Are
-    So
-    Awesome!!
-};
-
-// Create a directory named "test";
-filesystem.mkdir "test";
-
-// Write a file in the test dir named files.txt;
-filesystem.writeFile "test/files.txt" {
-    I'm a file as you can see.
-};
-
-// Remove the whole directory include the fiels inside it;
-filesystem.rmdirandfiles "test";
-
-dearPC "rmdirandfiles";
-
-// Read the file;
-filesystem.readFile "Rainbow Dash Are So.txt " RainbowDashAreSoText;
-// Output the file MLPFIM just read it;
-dearPC "${RainbowDashAreSoText}";
-
-// Skip one line of code;
-skip;
-dearPC "I hope the skip command and skip pass me";
-
-// the network object;
-network.get "https://youtube-dl-api.000webhostapp.com/?id=PH1U87rNR7Q" youtubeAPI;
-JSON youtubeAPI;
-dearPC "${youtubeAPI.videoId}";
-
-
-// convert data to JSON object;
-network.JSON "https://youtube-dl-api.000webhostapp.com/?id=PH1U87rNR7Q" youtubeAPI;
-dearPC "${youtubeAPI.title}";
-// Using the Terminal(CMD) command;
-system "echo Hello from the Terminal command";
+// let myPonyName "Rainbow Dash";
+// dearPC "Hello everypony i'm come from a source file end with .mlp";
+// dearPC "My name is ${myPonyName}";
+// dearPC "What is your name?";
+// spike newPonyName;
+// dearPC "Hello ${newPonyName},is nice too you :P";
+// dearPC "Can you be my new friend?";
+// spike befriend;
+// if befriend.includes("yes") || befriend.includes("Yes") || befriend.includes("sure") || befriend.includes("Sure")
+//     dearPC "Ya i have a new friend now :D "
+// else
+//     dearPC "Oh,but still,nice to meet you ${newPonyName} :D ";
+//
+// for i 0 2 1
+//     dearPC "Okie Dokie";
+//
+// dearPC "Do you love mlpfim programming language?";
+// spike lovemlp;
+//
+// if lovemlp.includes("yes")
+//     dearPC "Yes,me too"
+// else
+//     dearPC "Oh,then why do you using the mlpfim?";
+// include hello.mlpfim;
+//
+// filesystem.writeFile "Rainbow Dash Are So.txt" {
+//     Rainbow Dash Are
+//     So
+//     Awesome!!
+// };
+//
+// // Create a directory named "test";
+// filesystem.mkdir "test";
+//
+// // Write a file in the test dir named files.txt;
+// filesystem.writeFile "test/files.txt" {
+//     I'm a file as you can see.
+// };
+//
+// // Remove the whole directory include the fiels inside it;
+// filesystem.rmdirandfiles "test";
+//
+// dearPC "rmdirandfiles";
+//
+// // Read the file;
+// filesystem.readFile "Rainbow Dash Are So.txt " RainbowDashAreSoText;
+// // Output the file MLPFIM just read it;
+// dearPC "${RainbowDashAreSoText}";
+//
+// // Skip one line of code;
+// skip;
+// dearPC "I hope the skip command and skip pass me";
+//
+// // the network object;
+// network.get "https://youtube-dl-api.000webhostapp.com/?id=PH1U87rNR7Q" youtubeAPI;
+// JSON youtubeAPI;
+// dearPC "${youtubeAPI.videoId}";
+//
+//
+// // convert data to JSON object;
+// network.JSON "https://youtube-dl-api.000webhostapp.com/?id=PH1U87rNR7Q" youtubeAPI;
+// dearPC "${youtubeAPI.title}";
+// // Using the Terminal(CMD) command;
+// system "echo Hello from the Terminal command";
 
 // plugins;
 plugin rainbowdash.iamsoawesome("AWESOME","Daring");
