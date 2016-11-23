@@ -36,6 +36,10 @@ module.exports = {
 
             }
 
+            if(config.plugin === false){
+                plugin = false;
+            }
+
             if(typeof l == "undefined"){
 
                 // Default
@@ -57,7 +61,7 @@ module.exports = {
         }catch (e){
 
             if(e.message.includes("no such file")){
-                fs.writeFileSync(__dirname + "/mlpfimconfig.json","{\n  \"jsfallback\": true,\n  \"dev\": false\n}");
+                fs.writeFileSync(__dirname + "/mlpfimconfig.json","{\n  \"jsfallback\": true,\n  \"dev\": false,\n  \"plugin\": true\n}");
                 require("./interperter").main();
             }
 
@@ -154,7 +158,14 @@ module.exports = {
 
             // plugin
             else if(keyword.includes("plugin") && !keyword.includes("//")){
-                require("./buildfun/plugin").plugin(code,keyword,line);
+
+                if(plugin === false){
+                    console.log("Plugin is disabled");
+                    process.exit();
+                }else{
+                    require("./buildfun/plugin").plugin(code,keyword,line);
+                }
+
             }
 
             // handling error
@@ -196,6 +207,7 @@ process.stdin.setEncoding('utf8');
 
 var sourcefile = process.argv[2];
 var javascriptFallBack = true;
+var plugin = true;
 
 
 if( process.argv[2].includes(".mlp") || process.argv[2].includes(".mlpfim")){

@@ -1,4 +1,5 @@
 {
   "jsfallback": true,
-  "dev": false
+  "dev": false,
+  "plugin": true
 }
