@@ -11,5 +11,7 @@
   ],
   "author": "@felixfong227",
   "license": "MIT",
-  "devDependencies": {}
+  "bin": {
+    "mlp": "./interperter.js"
+  }
 }

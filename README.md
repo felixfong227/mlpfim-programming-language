@@ -33,9 +33,11 @@ and much more...
 
 ###Working program
 ```javascript
+`A Hello World Program?`
 dearPC "Hello what is your name?";
 spike name;
 dearPC "Nice to meet you ${name} :D";
+`This is a comment`
 ```
 
 ##JavaScript(NodeJS) error fall back

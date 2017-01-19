@@ -3,7 +3,7 @@ var path = require("path"),
 module.exports = {
 
     include: function (code,keyword,line) {
-        var sourcefilePath = path.join( __dirname + "/../" + code.split(keyword)[1].trim() );
+        var sourcefilePath = path.join( process.cwd() + "/../" + code.split(keyword)[1].trim() );
 
         try{
 

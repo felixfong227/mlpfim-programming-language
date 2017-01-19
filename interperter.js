@@ -1,7 +1,9 @@
-const fs = require("fs"),
+#!/usr/bin/env node
+var fs = require("fs"),
     path = require("path"),
     stdin = process.openStdin(),
-    terminal = require("child_process").exec;
+    terminal = require("child_process").exec
+;
 
 
 module.exports = {
@@ -13,7 +15,7 @@ module.exports = {
 
         try{
 
-            var config = fs.readFileSync(__dirname + "/mlpfimconfig.json").toString();
+            var config = fs.readFileSync(process.cwd() + "/mlpfimconfig.json").toString();
             config = JSON.parse(config);
 
             if(config.jsfallback === false){
@@ -61,7 +63,7 @@ module.exports = {
         }catch (e){
 
             if(e.message.includes("no such file")){
-                fs.writeFileSync(__dirname + "/mlpfimconfig.json","{\n  \"jsfallback\": true,\n  \"dev\": false,\n  \"plugin\": true\n}");
+                fs.writeFileSync(process.cwd() + "/mlpfimconfig.json","{\n  \"jsfallback\": true,\n  \"dev\": false,\n  \"plugin\": true\n}");
                 require("./interperter").main();
             }
 
@@ -179,16 +181,19 @@ module.exports = {
                     try{
                         eval(code);
                     }catch (e){
-
-                        console.log("I just don't know what when wrong on line => " + (line + 1));
-                        console.log("On code => " + code);
+                        console.log("== ERROR ==");
+                        console.log("I just don't know what when wrong?");
+                        console.log("Error line: " + (line + 1));
+                        console.log("====");
                         process.exit();
 
                     }
 
                 }else{
-                    console.log("I just don't know what when wrong on line => " + (line + 1));
-                    console.log("On code => " + code);
+                    console.log("== ERROR ==");
+                    console.log("I just don't know what when wrong?");
+                    console.log("Error line: " + (line + 1));
+                    console.log("====");
                     process.exit();
                 }
 
@@ -215,14 +220,19 @@ if( process.argv[2].includes(".mlp") || process.argv[2].includes(".mlpfim")){
     // MLP source file
     try{
 
-        var code = fs.readFileSync(__dirname + "/" + sourcefile).toString() + "\nexit;";
-        code = code.split(";");
+        var code = fs.readFileSync(process.cwd() + "/" + sourcefile).toString() + "\nexit;";
 
+        // Remove all the comment
+        code = code
+            .split(/`.*`/g).join("//SYSTEM_COMMENT;")
+        ;
+        code = code.split(";");
         require("./interperter").main();
 
     }catch (e){
 
         if(e.message.includes("no such file")){
+            console.log("== ERROR ==");
             console.log("Can't not find the correct source file");
             process.exit();
         }

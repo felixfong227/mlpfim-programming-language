@@ -46,8 +46,8 @@ module.exports = {
                     });
 
                 }else{
+                    console.log("== ERROR ==");
                     console.log("Please specify where is a http or a https call");
-                    console.on("On code => " + code);
                     console.log("On line => " + (line + 1));
                 }
 
@@ -95,9 +95,9 @@ module.exports = {
                     });
 
                 }else{
+                    console.log("== ERROR ==");
                     console.log("Please specify where is a http or a https call");
-                    console.on("On code => " + code);
-                    console.log("On line => " + (line + 1));
+                    console.log("On line: " + (line + 1));
                     process.exit();
                 }
 
@@ -114,8 +114,9 @@ module.exports = {
             e = e.message;
 
             if(e.includes("is not a function")){
+                console.log("== ERROR ==");
                 console.log("Can't not find the correct network object you are looking for");
-                console.log("On code: " + code);
+                console.log("On line: " + (line + 1));
                 process.exit();
             }
 

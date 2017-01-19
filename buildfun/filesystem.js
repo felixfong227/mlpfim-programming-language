@@ -9,7 +9,7 @@ module.exports = {
         var fileObject = {
 
             writeFile: function () {
-                var filePath = path.join(__dirname + "/../" +  code.split(call)[1].trim().replace("\"","").replace("\"","").split("{")[0] );
+                var filePath = path.join(process.cwd() + "/../" +  code.split(call)[1].trim().replace("\"","").replace("\"","").split("{")[0] );
                 var text = code.split("{")[1].split("}")[0].trim();
                 var bigText = [];
                 text = text.split("\n");
@@ -28,7 +28,7 @@ module.exports = {
 
             readFile: function () {
 
-                var filePath = path.join(__dirname + "/../" +  code.split(call)[1].split("\"")[1] );
+                var filePath = path.join(process.cwd() + "/../" +  code.split(call)[1].split("\"")[1] );
                 var textVariable = code.split(keyword)[1].split("\"")[2].trim();
                 var data = fs.readFileSync(filePath).toString().trim();
                 var bigData = [];
@@ -47,12 +47,12 @@ module.exports = {
             },
 
             mkdir: function () {
-                var filePath = path.join(__dirname + "/../" +  code.split(call)[1].split("\"")[1] );
+                var filePath = path.join(process.cwd() + "/../" +  code.split(call)[1].split("\"")[1] );
                 fs.mkdirSync(filePath);
             },
 
             rmdir: function () {
-                var filePath = path.join(__dirname + "/../" +  code.split(call)[1].split("\"")[1] );
+                var filePath = path.join(process.cwd() + "/../" +  code.split(call)[1].split("\"")[1] );
 
                 try{
                     fs.rmdirSync(filePath);
@@ -64,7 +64,7 @@ module.exports = {
             },
 
             rmdirandfiles: function () {
-                var filePath = path.join(__dirname + "/../" +  code.split(call)[1].split("\"")[1] );
+                var filePath = path.join(process.cwd() + "/../" +  code.split(call)[1].split("\"")[1] );
                 terminal(`rm -rfv ${filePath}`);
             }
 
