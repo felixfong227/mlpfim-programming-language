@@ -7,7 +7,7 @@
 
 #Install the interperter
 ```
-$ npm install mlpfim -g
+$ npm install mlpfim-programming-language -g
 ```
 
 ##How to set up and running?
