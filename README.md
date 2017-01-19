@@ -5,6 +5,11 @@
 <li>Clone the repo</li>
 <li>Create a new source file end with `.mlp` or `.mlpfim`</li>
 
+#Install the interperter
+```
+$ npm install mlpfim -g
+```
+
 ##How to set up and running?
 <li>Open up your `Terminal/Git Bash`,and `cd` into the repo you just clone down</li>
 <li>Using the command at the Terminal `$ node interperter.js <mlpSourceFile>`</li>
