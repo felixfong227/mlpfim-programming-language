@@ -1,9 +1,4 @@
 `My little pony : friendship is magic programming language`
 `GitHub: https://github.com/felixfong227/mlpfim-programming-language/`
 
-dearPC "== Welcome to ponyville ==";
-dearPC "";
-dearPC "What's your name";
-spike newPonyName;
-dearPC "Hi! my name is Rainbow Dash, nice to meet you ${newPonyName}!";
-dearPC "Do you know pony also brows the internet :P";
+include "hello.mlpfim";

@@ -3,8 +3,7 @@ var path = require("path"),
 module.exports = {
 
     include: function (code,keyword,line) {
-        var sourcefilePath = path.join( process.cwd() + "/../" + code.split(keyword)[1].trim() );
-
+        var sourcefilePath = path.join( process.cwd() + "/" + code.split(keyword)[1].trim().split("\"")[1] );
         try{
 
             var newCode = fs.readFileSync(sourcefilePath).toString();
@@ -17,10 +16,8 @@ module.exports = {
             require("../interperter").main(line);
 
         }catch (e){
-
             if(e.message.includes("no such file")){
-
-                console.log("Can't not find the file to be including => " + code.split(keyword)[1].trim());
+                console.log("Can't not find the file to be including: " + code.split(keyword)[1].trim());
                 process.exit();
 
             }
