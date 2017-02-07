@@ -1,5 +1,3 @@
 {
-  "jsfallback": true,
-  "dev": false,
-  "plugin": true
+  "dev": false
 }

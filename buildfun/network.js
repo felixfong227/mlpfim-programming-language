@@ -46,9 +46,7 @@ module.exports = {
                     });
 
                 }else{
-                    console.log("== ERROR ==");
-                    console.log("Please specify where is a http or a https call");
-                    console.log("On line => " + (line + 1));
+                    require("../interperter").echoError("Please specify where is a http or a https call", line);
                 }
 
                 require("../interperter").running = true;
@@ -95,10 +93,7 @@ module.exports = {
                     });
 
                 }else{
-                    console.log("== ERROR ==");
-                    console.log("Please specify where is a http or a https call");
-                    console.log("On line: " + (line + 1));
-                    process.exit();
+                    require("../interperter").echoError("Please specify where is a http or a https call", line);
                 }
 
                 require("../interperter").running = true;
@@ -114,10 +109,7 @@ module.exports = {
             e = e.message;
 
             if(e.includes("is not a function")){
-                console.log("== ERROR ==");
-                console.log("Can't not find the correct network object you are looking for");
-                console.log("On line: " + (line + 1));
-                process.exit();
+                require("../interperter").echoError("Can't not find the correct network object you are looking for",line);
             }
 
         }

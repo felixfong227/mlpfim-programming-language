@@ -17,8 +17,7 @@ module.exports = {
 
         }catch (e){
             if(e.message.includes("no such file")){
-                console.log("Can't not find the file to be including: " + code.split(keyword)[1].trim());
-                process.exit();
+                require("../interperter").echoError("Can't not find the file to be including: " + code.split(keyword)[1].trim(), line);
 
             }
         }

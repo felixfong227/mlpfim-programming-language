@@ -12,15 +12,11 @@ module.exports = {
 
     main: function (l) {
 
-
         try{
 
             var config = fs.readFileSync(process.cwd() + "/mlpfimconfig.json").toString();
             config = JSON.parse(config);
 
-            if(config.jsfallback === false){
-                javascriptFallBack = false;
-            }
 
             if(config.dev === true){
 
@@ -36,10 +32,6 @@ module.exports = {
                     process.exit();
                 });
 
-            }
-
-            if(config.plugin === false){
-                plugin = false;
             }
 
             if(typeof l == "undefined"){
@@ -63,7 +55,7 @@ module.exports = {
         }catch (e){
 
             if(e.message.includes("no such file")){
-                fs.writeFileSync(process.cwd() + "/mlpfimconfig.json","{\n  \"jsfallback\": true,\n  \"dev\": false,\n  \"plugin\": true\n}");
+                fs.writeFileSync(process.cwd() + "/mlpfimconfig.json","{\n  \"dev\": false\n}");
                 require("./interperter").main();
             }
 
@@ -75,6 +67,11 @@ module.exports = {
 
         var keyword = code.split(" ")[0];
 
+        if(typeof quiteWhenError == "undefined"){
+            quiteWhenError = true;
+        }else{
+            quiteWhenError = quiteWhenError;
+        }
 
         if(!require("./interperter").running){
 
@@ -171,37 +168,24 @@ module.exports = {
             }
 
             // handling error
-
-
             else{
-
-                if(javascriptFallBack === true){
-
-                    // try to run using the JavaScript engine
-                    try{
-                        eval(code);
-                    }catch (e){
-                        console.log("== ERROR ==");
-                        console.log("I just don't know what when wrong?");
-                        console.log("Error line: " + (line + 1));
-                        console.log("====");
-                        process.exit();
-
-                    }
-
-                }else{
-                    console.log("== ERROR ==");
-                    console.log("I just don't know what when wrong?");
-                    console.log("Error line: " + (line + 1));
-                    console.log("====");
-                    process.exit();
-                }
-
+                require("./interperter").echoError("I just don't know what when wrong?",line)
             }
 
 
         }
 
+    },
+
+    echoError: function (message,line) {
+        line = (line + 1);
+        console.log("== ERROR ==");
+        console.log(message);
+        if(!line <= 0){
+            console.log("Error line:" + line);
+        }
+        console.log("====");
+        process.exit();
     }
 
 };
@@ -211,9 +195,28 @@ process.stdin.setEncoding('utf8');
 // looping up for source files
 
 var sourcefile = process.argv[2];
-var javascriptFallBack = true;
-var plugin = true;
 
+// MLP Shell
+if(typeof process.argv[2] == "undefined"){
+
+    console.log("== MLP Shell ==");
+    console.log("== .exit to quite ==");
+
+    process.stdin.on("data",function(chunk) {
+
+        var code = chunk.toString().trim();
+
+        if(code == ".exit"){
+            process.exit();
+        }
+
+        require("./interperter").runCode(code, -1, false);
+
+    });
+
+    return false;
+
+}
 
 if( process.argv[2].includes(".mlp") || process.argv[2].includes(".mlpfim")){
 
@@ -227,14 +230,13 @@ if( process.argv[2].includes(".mlp") || process.argv[2].includes(".mlpfim")){
             .split(/`.*`/g).join("//SYSTEM_COMMENT;")
         ;
         code = code.split(";");
+
         require("./interperter").main();
 
     }catch (e){
 
         if(e.message.includes("no such file")){
-            console.log("== ERROR ==");
-            console.log("Can't not find the correct source file");
-            process.exit();
+            require("./interperter").echoError("Can't not find the correct source file", line);
         }
 
     }

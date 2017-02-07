@@ -1,6 +1,6 @@
 {
   "name": "mlpfim-programming-language",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "description": "A programming for the Brony programmers",
   "main": "interperter.js",
   "keywords": [

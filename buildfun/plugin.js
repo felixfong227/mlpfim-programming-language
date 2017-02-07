@@ -15,12 +15,9 @@ module.exports = {
             try{
                 eval(`require("${pluginPath}").${calling}(${args})`);
             }catch (e){
-                if(e.message.includes("Cannot find module")){
-                    console.log("Cannot find module => " + name);
-                    console.log("On code => " + code);
-                    console.log("On line => " + (line + 1))
+                if(e.message.includes()){
+                    require("../interperter").echoError("Cannot find module",line);
                 }
-                process.exit();
             }
 
 
@@ -30,9 +27,7 @@ module.exports = {
                 eval(`require("${pluginPath}").${calling}()`);
             }catch (e){
                 if(e.message.includes("Cannot find module")){
-                    console.log("Cannot find module => " + name);
-                    console.log("On code => " + code);
-                    console.log("On line => " + (line + 1))
+                    require("../interperter").echoError("Cannot find module: " + name, line);
                 }
                 process.exit();
             }

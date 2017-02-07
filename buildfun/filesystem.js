@@ -76,10 +76,7 @@ module.exports = {
             e = e.message;
 
             if(e.includes("is not a function")){
-                console.log("Can't not find the correct filesystem object you are looking for");
-                console.log("On code: " + code);
-                process.exit();
-            }
+                require("../interperter").echoError("Can't not find the correct filesystem object you are looking for", line);
 
         }
 
